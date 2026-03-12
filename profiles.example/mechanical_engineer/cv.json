@@ -1,0 +1,114 @@
+{
+  "person": {
+    "name": "Juan Perez",
+    "title": {
+      "es": "Mechanical Engineer",
+      "en": "Mechanical Engineer"
+    }
+  },
+  "contact": {
+    "email": "juan.perez@example.com",
+    "phone": "+58 412 000 0000",
+    "location": {
+      "es": "Merida, Venezuela",
+      "en": "Merida, Venezuela"
+    },
+    "linkedin": "https://www.linkedin.com/in/juan-perez-mech/",
+    "github": ""
+  },
+  "summary": {
+    "es": "Ingeniero mecanico en Merida con experiencia en mantenimiento industrial, mejora de procesos y soporte tecnico en plantas de produccion.",
+    "en": "Mechanical engineer in Merida with experience in industrial maintenance, process improvement, and technical support for production plants."
+  },
+  "experience": [
+    {
+      "role": {
+        "es": "Mechanical Engineer",
+        "en": "Mechanical Engineer"
+      },
+      "company": "Taller El Vigia",
+      "location": {
+        "es": "El Vigia, Merida, Venezuela",
+        "en": "El Vigia, Merida, Venezuela"
+      },
+      "period": {
+        "start": "2020-01",
+        "end": "present"
+      },
+      "bullets": [
+        {
+          "text": {
+            "es": "Planificacion de mantenimiento preventivo para equipos de procesamiento agricola.",
+            "en": "Planned preventive maintenance for agricultural processing equipment."
+          }
+        },
+        {
+          "text": {
+            "es": "Estandarizacion de procedimientos y reduccion de tiempos muertos en linea.",
+            "en": "Standardized procedures and reduced line downtime."
+          }
+        }
+      ]
+    }
+  ],
+  "skills": [
+    {
+      "name": {
+        "es": "Ingenieria Mecanica",
+        "en": "Mechanical Engineering"
+      },
+      "items": [
+        "Preventive Maintenance",
+        "Root Cause Analysis",
+        "Technical Documentation"
+      ]
+    },
+    {
+      "name": {
+        "es": "Herramientas",
+        "en": "Tools"
+      },
+      "items": [
+        "AutoCAD",
+        "SolidWorks",
+        "Excel"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "degree": {
+        "es": "Ingenieria Mecanica",
+        "en": "Mechanical Engineering"
+      },
+      "institution": "Universidad de Los Andes",
+      "period": {
+        "start": "2014-09",
+        "end": "2019-07"
+      },
+      "notes": {
+        "es": "Enfasis en sistemas termicos y manufactura.",
+        "en": "Focus on thermal systems and manufacturing."
+      }
+    }
+  ],
+  "publications": [],
+  "keywords": {
+    "es": [
+      "Mechanical Engineering",
+      "Mantenimiento Preventivo",
+      "RCA",
+      "Mejora Continua",
+      "AutoCAD",
+      "SolidWorks"
+    ],
+    "en": [
+      "Mechanical Engineering",
+      "Preventive Maintenance",
+      "RCA",
+      "Continuous Improvement",
+      "AutoCAD",
+      "SolidWorks"
+    ]
+  }
+}

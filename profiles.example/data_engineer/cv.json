@@ -1,0 +1,120 @@
+{
+  "person": {
+    "name": "Juan Perez",
+    "title": {
+      "es": "Data Engineer",
+      "en": "Data Engineer"
+    }
+  },
+  "contact": {
+    "email": "juan.perez@example.com",
+    "phone": "+58 412 000 0000",
+    "location": {
+      "es": "Merida, Venezuela",
+      "en": "Merida, Venezuela"
+    },
+    "linkedin": "https://www.linkedin.com/in/juan-perez-data/",
+    "github": "https://github.com/juanperez"
+  },
+  "summary": {
+    "es": "Ingeniero de datos en Merida, enfocado en ETL, modelado SQL e integracion de APIs para proyectos de servicios y comercio local.",
+    "en": "Data engineer based in Merida, focused on ETL, SQL modeling, and API integration for local services and commerce projects."
+  },
+  "experience": [
+    {
+      "role": {
+        "es": "Data Engineer",
+        "en": "Data Engineer"
+      },
+      "company": "Andes Analytics",
+      "location": {
+        "es": "Merida, Venezuela",
+        "en": "Merida, Venezuela"
+      },
+      "period": {
+        "start": "2021-03",
+        "end": "present"
+      },
+      "bullets": [
+        {
+          "text": {
+            "es": "Desarrollo de pipelines ETL para datos de ventas y logistica de mercados regionales.",
+            "en": "Built ETL pipelines for sales and logistics data from regional markets."
+          }
+        },
+        {
+          "text": {
+            "es": "Diseno de modelos en PostgreSQL y tableros KPI para operaciones diarias.",
+            "en": "Designed PostgreSQL models and KPI dashboards for daily operations."
+          }
+        }
+      ]
+    }
+  ],
+  "skills": [
+    {
+      "name": {
+        "es": "Data Engineering",
+        "en": "Data Engineering"
+      },
+      "items": [
+        "PostgreSQL",
+        "SQL",
+        "Python",
+        "ETL",
+        "APIs"
+      ]
+    },
+    {
+      "name": {
+        "es": "Herramientas",
+        "en": "Tools"
+      },
+      "items": [
+        "Linux",
+        "Docker",
+        "Superset"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "degree": {
+        "es": "Ingenieria de Sistemas",
+        "en": "Systems Engineering"
+      },
+      "institution": "Universidad de Los Andes",
+      "period": {
+        "start": "2015-09",
+        "end": "2020-07"
+      },
+      "notes": {
+        "es": "Proyecto final sobre analitica para rutas de transporte urbano en Merida.",
+        "en": "Capstone project on analytics for urban transport routes in Merida."
+      }
+    }
+  ],
+  "publications": [],
+  "keywords": {
+    "es": [
+      "Data Engineering",
+      "ETL",
+      "SQL",
+      "PostgreSQL",
+      "Python",
+      "APIs",
+      "Linux",
+      "BI"
+    ],
+    "en": [
+      "Data Engineering",
+      "ETL",
+      "SQL",
+      "PostgreSQL",
+      "Python",
+      "APIs",
+      "Linux",
+      "BI"
+    ]
+  }
+}

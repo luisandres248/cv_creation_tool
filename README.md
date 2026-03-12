@@ -1,51 +1,67 @@
-# CV Pipeline (programmatically friendly)
+# cv-pipeline
 
-Pipeline simple para mantener un CV editable, versionable y ATS-friendly desde una fuente de datos única.
+Genera `cv.typ` y `cv.pdf` para uno o varios perfiles usando Typst.
+
+## Dependencia obligatoria
+
+- `typst` en `PATH`
 
 ## Estructura
 
-- `data/cv_master.json`: contenido base (ES + EN)
-- `data/variants.json`: reglas por variante (actualmente `industrial_data`)
-- `scripts/build_cv.py`: generador de salidas
-- `build/<lang>/<variant>/cv.{md,txt,typ}`: artefactos generados
+- `profiles/` -> datos reales (privado, ignorado por git)
+- `profiles.example/` -> ejemplos con la misma estructura (comiteable)
+- `templates/cv.typ` -> plantilla Typst editable
+- `generated/` -> salida (`cv.typ`, `cv.pdf`)
+- `scripts/build.sh` -> build de perfiles
+- `scripts/init_profiles.sh` -> copia `profiles.example` a `profiles`
 
-`<lang>` puede ser:
-- `es`: solo español
-- `en`: solo inglés
-- `bi`: bilingue (ES+EN en un solo documento)
+## Formato de cada perfil
 
-## Uso
+Cada perfil es un directorio dentro de `profiles/`:
 
-```bash
-make build
-```
+- `profiles/<perfil>/cv.json`
+- `profiles/<perfil>/photo.jpg`
 
-Comandos útiles:
+`photo.jpg` es obligatoria y siempre con ese nombre.
 
-```bash
-make build-es
-make build-en
-make build-bi
-make pdf-bi
-```
-
-Manual:
+## Inicio rapido
 
 ```bash
-python3 scripts/build_cv.py --lang bi --variant industrial_data
+./scripts/init_profiles.sh
 ```
 
-## Objetivo ATS/IA
+Editar datos en `profiles/<perfil>/cv.json` y reemplazar `profiles/<perfil>/photo.jpg`.
 
-- contenido en texto plano estructurado
-- formato de una columna
-- secciones estándar
-- variantes reproducibles por comando
-- salida `cv.txt` para formularios de postulación
+## Build
 
-## Edición recomendada
+Todos los perfiles, bilingue:
 
-1. Editar `data/cv_master.json`
-2. Ajustar keywords/filtrado en `data/variants.json`
-3. Ejecutar `make build`
-4. Revisar `build/bi/industrial_data/cv.md` y `cv.pdf`
+```bash
+./scripts/build.sh
+```
+
+Un perfil:
+
+```bash
+./scripts/build.sh data_engineer
+```
+
+Un perfil + idioma:
+
+```bash
+./scripts/build.sh data_engineer es
+```
+
+Idiomas: `es`, `en`, `bi`, `all`.
+
+## Salida
+
+Para cada perfil en `generated/<perfil>/`:
+
+- `cv.typ` y `cv.pdf` si `lang=bi`
+- `cv-es.typ` / `cv-es.pdf` si `lang=es`
+- `cv-en.typ` / `cv-en.pdf` si `lang=en`
+
+## Personalizacion visual
+
+Modificar `templates/cv.typ`. La estructura/estilo del PDF se define ahi.

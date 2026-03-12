@@ -1,0 +1,7 @@
+# Real user profiles (private)
+/profiles/**
+!/profiles/.gitkeep
+
+# Generated outputs
+/generated/**
+!/generated/.gitkeep
