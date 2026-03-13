@@ -43,6 +43,7 @@
       "keywords": "Palabras clave",
       "experience": "Experiencia",
       "skills": "Habilidades",
+      "additional": "Otras habilidades y experiencias",
       "education": "Formacion",
       "publications": "Publicaciones",
       "links": "Links",
@@ -53,6 +54,7 @@
       "keywords": "Keywords",
       "experience": "Experience",
       "skills": "Skills",
+      "additional": "Additional Experience & Skills",
       "education": "Education",
       "publications": "Publications",
       "links": "Links",
@@ -84,6 +86,14 @@
   }
 }
 
+#let localized_item(item, lang) = {
+  if type(item) == dictionary and lang in item {
+    item.at(lang)
+  } else {
+    item
+  }
+}
+
 #let section_bar(title) = [
   #v(0.65em)
   #grid(
@@ -106,22 +116,27 @@
   image(path, width: 2.85cm, height: 2.85cm, fit: "cover"),
 )
 
-#let links_line(cv, l) = {
+#let links_line(cv) = {
   let links = ()
 
   if "linkedin" in cv.contact and cv.contact.linkedin != "" {
-    links.push(link(cv.contact.linkedin)["LinkedIn"])
+    links.push(link(cv.contact.linkedin)[LinkedIn])
   }
 
   if "github" in cv.contact and cv.contact.github != "" {
-    links.push(link(cv.contact.github)["GitHub"])
+    links.push(link(cv.contact.github)[GitHub])
+  }
+
+  if "links" in cv.contact {
+    for item in cv.contact.links {
+      if "label" in item and "url" in item and item.url != "" {
+        links.push(link(item.url)[item.label])
+      }
+    }
   }
 
   if links.len() > 0 {
-    [
-      #text(size: 8.8pt, fill: palette.at("muted"))[#(l.at("links") + ": ")]
-      #text(size: 8.8pt, fill: palette.at("accent"))[#links.join(" | ")]
-    ]
+    [#text(size: 8.8pt, fill: palette.at("accent"))[#links.join(" | ")]]
   } else {
     []
   }
@@ -129,7 +144,7 @@
 
 #let contact_line(cv, lang) = {
   let base = (
-    link("mailto:" + cv.contact.email)[cv.contact.email],
+    cv.contact.email,
     cv.contact.phone,
     cv.contact.location.at(lang),
   )
@@ -155,10 +170,14 @@
         #text(size: 21pt, weight: "bold", fill: palette.at("ink"))[#cv.person.name]
         #v(0.12em)
         #text(size: 10.8pt, weight: "medium", fill: palette.at("body"))[#cv.person.title.at(lang)]
+        #if "subtitle" in cv.person [
+          #v(0.14em)
+          #text(size: 9.2pt, fill: palette.at("accent"))[#cv.person.subtitle.at(lang)]
+        ]
         #v(0.3em)
         #text(size: 8.9pt, fill: palette.at("muted"))[#contact_line(cv, lang)]
         #v(0.08em)
-        #links_line(cv, l)
+        #links_line(cv)
       ],
     )
 
@@ -184,19 +203,31 @@
     #section_bar(l.at("skills"))
     #for skill in cv.skills [
       #grid(
-        columns: (2.75cm, 1fr),
+        columns: (3.25cm, 1fr),
         column-gutter: 7pt,
         align: horizon,
         text(weight: "semibold", fill: palette.at("ink"))[#skill.name.at(lang)],
-        text(fill: palette.at("body"))[#skill.items.join(" | ")],
+        text(fill: palette.at("body"))[#skill.items.map(it => localized_item(it, lang)).join(" | ")],
       )
       #v(0.12em)
     ]
 
+    #if "additional" in cv and cv.additional.len() > 0 [
+      #section_bar(l.at("additional"))
+      #for item in cv.additional [
+        - *#item.title.at(lang)*: #item.text.at(lang)
+        #v(0.12em)
+      ]
+    ]
+
     #section_bar(l.at("education"))
     #for edu in cv.education [
-      - *#edu.degree.at(lang)* - #edu.institution (#month_label(edu.period, lang))
-      #if "notes" in edu [
+      - *#edu.degree.at(lang)* - #edu.institution (#month_label(edu.period, lang))#if "status" in edu { " - " + edu.status.at(lang) }
+      #if "details" in edu [
+        #for detail in edu.details [
+          - #detail.at(lang)
+        ]
+      ] else if "notes" in edu [
         - #edu.notes.at(lang)
       ]
       #v(0.16em)
