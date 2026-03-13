@@ -1,5 +1,5 @@
 # Real user profiles (private)
-/profiles/**
+/profiles
 !/profiles/.gitkeep
 
 # Generated outputs
