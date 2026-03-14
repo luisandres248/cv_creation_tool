@@ -40,7 +40,6 @@
   if lang == "es" {
     (
       "summary": "Perfil",
-      "keywords": "Palabras clave",
       "experience": "Experiencia",
       "skills": "Habilidades",
       "additional": "Otras habilidades y experiencias",
@@ -51,7 +50,6 @@
   } else {
     (
       "summary": "Summary",
-      "keywords": "Keywords",
       "experience": "Experience",
       "skills": "Skills",
       "additional": "Additional Experience & Skills",
@@ -78,14 +76,6 @@
   start + " - " + end_label
 }
 
-#let lang_keywords(cv, lang) = {
-  if "keywords" in cv and lang in cv.keywords {
-    cv.keywords.at(lang)
-  } else {
-    ()
-  }
-}
-
 #let localized_item(item, lang) = {
   if type(item) == dictionary and lang in item {
     item.at(lang)
@@ -94,16 +84,31 @@
   }
 }
 
+#let render_detail(detail, lang) = {
+  if type(detail) == dictionary and "text" in detail {
+    [
+      #(detail.text.at(lang))
+      #if "url" in detail and detail.url != "" [
+        #text(fill: palette.at("accent"))[ #link(detail.url)[#if "label" in detail { detail.label.at(lang) } else { detail.url }] ]
+      ]
+    ]
+  } else if type(detail) == dictionary and lang in detail {
+    detail.at(lang)
+  } else {
+    detail
+  }
+}
+
 #let section_bar(title) = [
-  #v(0.65em)
+  #v(0.45em)
   #grid(
     columns: (auto, 1fr),
-    column-gutter: 8pt,
+    column-gutter: 6pt,
     align: horizon,
-    text(size: 10.2pt, weight: "semibold", fill: palette.at("accent"))[#title],
-    line(length: 100%, stroke: 0.55pt + palette.at("line")),
+    text(size: 9.8pt, weight: "semibold", fill: palette.at("accent"))[#title],
+    line(length: 100%, stroke: 0.45pt + palette.at("line")),
   )
-  #v(0.28em)
+  #v(0.18em)
 ]
 
 #let photo_circle(path) = box(
@@ -153,30 +158,29 @@
 
 #let render_lang(cv, lang, photo_path) = {
   let l = labels(lang)
-  let kws = lang_keywords(cv, lang)
 
   [
-    #set page(margin: (x: 1.55cm, y: 1.35cm))
-    #set text(font: "Liberation Sans", size: 9.9pt, fill: palette.at("body"))
-    #set par(leading: 0.62em)
+    #set page(margin: (x: 1.3cm, y: 1.1cm))
+    #set text(font: "Liberation Sans", size: 9.35pt, fill: palette.at("body"))
+    #set par(leading: 0.52em)
     #set heading(numbering: none)
 
     #grid(
       columns: (auto, 1fr),
-      column-gutter: 12pt,
+      column-gutter: 10pt,
       align: top,
       [#photo_circle(photo_path)],
       [
-        #text(size: 21pt, weight: "bold", fill: palette.at("ink"))[#cv.person.name]
-        #v(0.12em)
-        #text(size: 10.8pt, weight: "medium", fill: palette.at("body"))[#cv.person.title.at(lang)]
-        #if "subtitle" in cv.person [
-          #v(0.14em)
-          #text(size: 9.2pt, fill: palette.at("accent"))[#cv.person.subtitle.at(lang)]
-        ]
-        #v(0.3em)
-        #text(size: 8.9pt, fill: palette.at("muted"))[#contact_line(cv, lang)]
+        #text(size: 19pt, weight: "bold", fill: palette.at("ink"))[#cv.person.name]
         #v(0.08em)
+        #text(size: 10pt, weight: "medium", fill: palette.at("body"))[#cv.person.title.at(lang)]
+        #if "subtitle" in cv.person [
+          #v(0.1em)
+          #text(size: 8.8pt, fill: palette.at("accent"))[#cv.person.subtitle.at(lang)]
+        ]
+        #v(0.18em)
+        #text(size: 8.3pt, fill: palette.at("muted"))[#contact_line(cv, lang)]
+        #v(0.04em)
         #links_line(cv)
       ],
     )
@@ -184,32 +188,27 @@
     #section_bar(l.at("summary"))
     #cv.summary.at(lang)
 
-    #if kws.len() > 0 [
-      #section_bar(l.at("keywords"))
-      #text(size: 9.2pt, fill: palette.at("body"))[#kws.join(" | ")]
-    ]
-
     #section_bar(l.at("experience"))
     #for exp in cv.experience [
-      #text(size: 10pt, weight: "semibold", fill: palette.at("ink"))[#exp.role.at(lang)]
-      #text(size: 9.05pt, fill: palette.at("muted"))[*#exp.company* | #exp.location.at(lang) | #month_label(exp.period, lang)]
-      #v(0.14em)
+      #text(size: 9.5pt, weight: "semibold", fill: palette.at("ink"))[#exp.role.at(lang)]
+      #text(size: 8.55pt, fill: palette.at("muted"))[*#exp.company* | #exp.location.at(lang) | #month_label(exp.period, lang)]
+      #v(0.08em)
       #for bullet in exp.bullets [
         - #bullet.text.at(lang)
       ]
-      #v(0.27em)
+      #v(0.16em)
     ]
 
     #section_bar(l.at("skills"))
     #for skill in cv.skills [
       #grid(
-        columns: (3.25cm, 1fr),
-        column-gutter: 7pt,
+        columns: (auto, 1fr),
+        column-gutter: 6pt,
         align: horizon,
         text(weight: "semibold", fill: palette.at("ink"))[#skill.name.at(lang)],
         text(fill: palette.at("body"))[#skill.items.map(it => localized_item(it, lang)).join(" | ")],
       )
-      #v(0.12em)
+      #v(0.06em)
     ]
 
     #if "additional" in cv and cv.additional.len() > 0 [
@@ -225,12 +224,12 @@
       - *#edu.degree.at(lang)* - #edu.institution (#month_label(edu.period, lang))#if "status" in edu { " - " + edu.status.at(lang) }
       #if "details" in edu [
         #for detail in edu.details [
-          - #detail.at(lang)
+          - #render_detail(detail, lang)
         ]
       ] else if "notes" in edu [
         - #edu.notes.at(lang)
       ]
-      #v(0.16em)
+      #v(0.08em)
     ]
 
     #if "publications" in cv and cv.publications.len() > 0 [
