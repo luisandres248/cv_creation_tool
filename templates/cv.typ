@@ -84,6 +84,46 @@
   }
 }
 
+#let skill_text(item, lang) = {
+  if type(item) == dictionary {
+    if "label" in item {
+      localized_item(item.label, lang)
+    } else if "name" in item {
+      localized_item(item.name, lang)
+    } else if lang in item {
+      item.at(lang)
+    } else if "key" in item {
+      item.key
+    } else {
+      ""
+    }
+  } else {
+    localized_item(item, lang)
+  }
+}
+
+#let skill_category_label(skill, lang) = {
+  if "short" in skill {
+    localized_item(skill.short, lang)
+  } else {
+    localized_item(skill.name, lang)
+  }
+}
+
+#let skill_items_line(skill, lang) = {
+  skill.items.map(item => skill_text(item, lang)).join(" · ")
+}
+
+#let skill_group(skill, lang) = [
+  #grid(
+    columns: (2.9cm, 1fr),
+    column-gutter: 8pt,
+    align: top,
+    text(size: 8.15pt, weight: "semibold", fill: palette.at("muted"))[#skill_category_label(skill, lang)],
+    text(size: 8.5pt, fill: palette.at("body"))[#skill_items_line(skill, lang)],
+  )
+]
+
 #let render_detail(detail, lang) = {
   if type(detail) == dictionary and "text" in detail {
     [
@@ -201,14 +241,8 @@
 
     #section_bar(l.at("skills"))
     #for skill in cv.skills [
-      #grid(
-        columns: (auto, 1fr),
-        column-gutter: 6pt,
-        align: horizon,
-        text(weight: "semibold", fill: palette.at("ink"))[#skill.name.at(lang)],
-        text(fill: palette.at("body"))[#skill.items.map(it => localized_item(it, lang)).join(" | ")],
-      )
-      #v(0.06em)
+      #skill_group(skill, lang)
+      #v(0.22em)
     ]
 
     #if "additional" in cv and cv.additional.len() > 0 [

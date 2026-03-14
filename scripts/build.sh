@@ -17,6 +17,13 @@ esac
 
 mkdir -p "$OUT_DIR"
 
+list_profiles() {
+  find "$PROFILES_DIR" -mindepth 1 -maxdepth 1 -type d \
+    -exec test -f '{}/cv.json' \; \
+    -exec test -f '{}/photo.jpg' \; \
+    -printf '%f\n' | sort
+}
+
 build_one() {
   local profile_name="$1"
   local lang="$2"
@@ -60,7 +67,7 @@ TYP
 if [[ -n "$PROFILE" ]]; then
   profiles=("$PROFILE")
 else
-  mapfile -t profiles < <(find "$PROFILES_DIR" -mindepth 1 -maxdepth 1 -type d -printf '%f\n' | sort)
+  mapfile -t profiles < <(list_profiles)
 fi
 
 if [[ ${#profiles[@]} -eq 0 ]]; then
@@ -71,6 +78,15 @@ fi
 for p in "${profiles[@]}"; do
   if [[ ! -d "$PROFILES_DIR/$p" ]]; then
     echo "Profile not found: $p" >&2
+    mapfile -t available_profiles < <(list_profiles)
+    if [[ ${#available_profiles[@]} -gt 0 ]]; then
+      echo "Available profiles: ${available_profiles[*]}" >&2
+    fi
+    exit 1
+  fi
+
+  if [[ ! -f "$PROFILES_DIR/$p/cv.json" || ! -f "$PROFILES_DIR/$p/photo.jpg" ]]; then
+    echo "Invalid profile: $p (expected cv.json and photo.jpg)" >&2
     exit 1
   fi
 
