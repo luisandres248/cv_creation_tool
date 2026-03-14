@@ -32,6 +32,9 @@ Cada perfil es un directorio dentro de `profiles/`:
 
 Editar datos en `profiles/<perfil>/cv.json` y reemplazar `profiles/<perfil>/photo.jpg`.
 
+Para mantener el CV compacto, la plantilla no renderiza una seccion separada de `publications`.
+Si quieres mostrar una publicacion, agregala como un item dentro de `education[].details` usando `text`, `url` y `label`.
+
 ## Build
 
 Todos los perfiles, bilingue:

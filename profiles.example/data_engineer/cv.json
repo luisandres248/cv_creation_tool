@@ -91,7 +91,20 @@
       "notes": {
         "es": "Proyecto final sobre analitica para rutas de transporte urbano en Merida.",
         "en": "Capstone project on analytics for urban transport routes in Merida."
-      }
+      },
+      "details": [
+        {
+          "text": {
+            "es": "Publicacion relacionada integrada en formacion para compactar el CV.",
+            "en": "Related publication embedded under education to keep the CV compact."
+          },
+          "url": "https://example.com/publication",
+          "label": {
+            "es": "(enlace)",
+            "en": "(link)"
+          }
+        }
+      ]
     }
   ],
   "publications": [],

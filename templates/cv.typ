@@ -44,8 +44,7 @@
       "skills": "Habilidades",
       "additional": "Otras habilidades y experiencias",
       "education": "Formacion",
-      "publications": "Publicaciones",
-      "links": "Links",
+      "links": "Enlaces",
     )
   } else {
     (
@@ -54,7 +53,6 @@
       "skills": "Skills",
       "additional": "Additional Experience & Skills",
       "education": "Education",
-      "publications": "Publications",
       "links": "Links",
     )
   }
@@ -116,7 +114,7 @@
 
 #let skill_group(skill, lang) = [
   #grid(
-    columns: (2.9cm, 1fr),
+    columns: (3.2cm, 1fr),
     column-gutter: 8pt,
     align: top,
     text(size: 8.15pt, weight: "semibold", fill: palette.at("muted"))[#skill_category_label(skill, lang)],
@@ -266,15 +264,6 @@
       #v(0.08em)
     ]
 
-    #if "publications" in cv and cv.publications.len() > 0 [
-      #section_bar(l.at("publications"))
-      #for pub in cv.publications [
-        - #pub.citation.at(lang)
-        #if "url" in pub and pub.url != "" [
-          - #link(pub.url)[#pub.url]
-        ]
-      ]
-    ]
   ]
 }
 
