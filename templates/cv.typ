@@ -114,7 +114,7 @@
 
 #let skill_group(skill, lang) = [
   #grid(
-    columns: (3.2cm, 1fr),
+    columns: (4.1cm, 1fr),
     column-gutter: 8pt,
     align: top,
     text(size: 8.15pt, weight: "semibold", fill: palette.at("muted"))[#skill_category_label(skill, lang)],
@@ -150,13 +150,13 @@
 ]
 
 #let photo_circle(path) = box(
-  width: 2.85cm,
-  height: 2.85cm,
+  width: 2.7cm,
+  height: 2.7cm,
   radius: 50%,
   inset: 0pt,
   clip: true,
   stroke: 1.1pt + palette.at("accent"),
-  image(path, width: 2.85cm, height: 2.85cm, fit: "cover"),
+  image(path, width: 2.7cm, height: 2.7cm, fit: "cover"),
 )
 
 #let links_line(cv) = {
@@ -207,20 +207,19 @@
       columns: (auto, 1fr),
       column-gutter: 10pt,
       align: top,
-      [#photo_circle(photo_path)],
-      [
-        #text(size: 19pt, weight: "bold", fill: palette.at("ink"))[#cv.person.name]
-        #v(0.08em)
-        #text(size: 10pt, weight: "medium", fill: palette.at("body"))[#cv.person.title.at(lang)]
-        #if "subtitle" in cv.person [
+        [#photo_circle(photo_path)],
+        [
+          #text(size: 19pt, weight: "bold", fill: palette.at("ink"))[#cv.person.name]
+          #v(0.04em)
+          #text(size: 9.7pt, weight: "medium", fill: palette.at("body"))[#cv.person.title.at(lang)]
+          #if "subtitle" in cv.person [
+            #v(0.04em)
+            #text(size: 8.55pt, fill: palette.at("accent"))[#cv.person.subtitle.at(lang)]
+          ]
           #v(0.1em)
-          #text(size: 8.8pt, fill: palette.at("accent"))[#cv.person.subtitle.at(lang)]
-        ]
-        #v(0.18em)
-        #text(size: 8.3pt, fill: palette.at("muted"))[#contact_line(cv, lang)]
-        #v(0.04em)
-        #links_line(cv)
-      ],
+          #text(size: 8.1pt, fill: palette.at("muted"))[#contact_line(cv, lang)]
+          #links_line(cv)
+        ],
     )
 
     #section_bar(l.at("summary"))
